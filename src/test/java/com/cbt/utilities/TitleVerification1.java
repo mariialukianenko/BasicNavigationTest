@@ -3,10 +3,11 @@ package com.cbt.utilities;
 import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Arrays;
 
-public class TitleVerification {
+
+public class TitleVerification1 {
 
     public static void main(String[] args) {
 
@@ -39,4 +40,3 @@ public class TitleVerification {
         driver.quit();
     }
 }
-
