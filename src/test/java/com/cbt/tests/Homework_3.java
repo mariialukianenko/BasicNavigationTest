@@ -1,6 +1,5 @@
 package com.cbt.tests;
 
-import com.cbt.utilities.StringUtility;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Set;
 
 public class Homework_3 {
 
@@ -92,8 +92,36 @@ public class Homework_3 {
 
     }
 
+    @Test
+    public void testCase_6() throws InterruptedException {
+        driver.get("https://www.tempmailaddress.com/");
+        String email = driver.findElement(By.id("email")).getText();
+        Thread.sleep(2000);
+        driver.navigate().to("https://practice-cybertekschool.herokuapp.com/");
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//a[text()='Sign Up For Mailing List']")).click();
+        driver.findElement(By.xpath("//input[@type='text']")).sendKeys("Name");
+        driver.findElement(By.xpath("//input[@type='email']")).sendKeys(email);
+        driver.findElement(By.xpath("//button[@class='radius']")).click();
+        String actual = driver.findElement(By.cssSelector("h3[class='subheader']")).getText();
+        String expected = "Thank you for signing up. Click the button below to return to the home page.";
+        Assert.assertEquals(expected, actual);
+        Thread.sleep(2000);
+        Thread.sleep(2000);
+        driver.navigate().to("https://www.tempmailaddress.com");
+        WebElement emailfrom = driver.findElement(By.xpath("//*[@id=\"schranka\"]/tr[1]/td[1]"));
+        Assert.assertTrue(emailfrom.isDisplayed());
+        emailfrom.click();
+        String expectedEmailFrom = "do-not-reply@practice.cybertekschool.com";
+        String actualEmailFrom = driver.findElement(By.id("odesilatel")).getText();
+        Assert.assertEquals(actualEmailFrom, expectedEmailFrom);
+        String expectedSubject = "Thanks for subscribing to practice.cybertekschool.com!";
+        String actualSubject = driver.findElement(By.id("predmet")).getText();
+        Assert.assertEquals(actualSubject, expectedSubject);
+    }
 
-    @BeforeMethod
+
+        @BeforeMethod
     public void setup(){
         WebDriverManager.chromedriver().version("79").setup();
         driver = new ChromeDriver();
