@@ -120,6 +120,79 @@ public class Homework_3 {
         Assert.assertEquals(actualSubject, expectedSubject);
     }
 
+    @Test
+    public void testCase_7(){
+        driver.get("https://practice-cybertekschool.herokuapp.com/");
+        driver.findElement(By.xpath("//a[@href='/upload']")).click();
+
+        WebElement upload = driver.findElement(By.id("file-upload"));
+        String filePath = System.getProperty("user.dir") + "/pom.xml";
+        upload.sendKeys(filePath);
+        driver.findElement(By.id("file-submit")).click();
+
+        String expected = "File Uploaded!";
+        String actual = driver.findElement(By.tagName("h3")).getText();
+        Assert.assertEquals(expected, actual);
+
+        String expectedFileName = "pom.xml";
+        String actualFileName = driver.findElement(By.id("uploaded-files")).getText();
+        Assert.assertEquals(expectedFileName, actualFileName);
+    }
+
+
+    @Test
+    public void testCase_8(){
+        driver.get("https://practice-cybertekschool.herokuapp.com/");
+        driver.findElement(By.cssSelector("a[href='/autocomplete']")).click();
+        driver.findElement(By.id("myCountry")).sendKeys("United States of America");
+        driver.findElement(By.xpath("//p[@id='result']")).isDisplayed();
+    }
+
+    @Test
+    public void testCase_9(){
+        driver.get("https://practice-cybertekschool.herokuapp.com/");
+        driver.findElement(By.cssSelector("a[href='/status_codes']")).click();
+        driver.findElement(By.cssSelector("a[href='status_codes/200']")).click();
+
+        String expected = "This page returned a 200 status code";
+        String actual = driver.findElement(By.xpath("//p[contains(text(), 'This page returned a 200')]")).getText();
+        Assert.assertTrue(actual.contains(expected));
+    }
+
+    @Test
+    public void testCase_10(){
+        driver.get("https://practice-cybertekschool.herokuapp.com/");
+        driver.findElement(By.cssSelector("a[href='/status_codes']")).click();
+        driver.findElement(By.cssSelector("a[href='status_codes/301']")).click();
+
+        String expected = "This page returned a 301 status code";
+        String actual = driver.findElement(By.xpath("//p[contains(text(), 'This page returned a 301')]")).getText();
+        Assert.assertTrue(actual.contains(expected));
+    }
+
+    @Test
+    public void testCase_11(){
+        driver.get("https://practice-cybertekschool.herokuapp.com/");
+        driver.findElement(By.cssSelector("a[href='/status_codes']")).click();
+        driver.findElement(By.cssSelector("a[href='status_codes/404']")).click();
+
+        String expected = "This page returned a 404 status code";
+        String actual = driver.findElement(By.xpath("//p[contains(text(), 'This page returned a 404')]")).getText();
+        Assert.assertTrue(actual.contains(expected));
+    }
+
+
+    @Test
+    public void testCase_12(){
+        driver.get("https://practice-cybertekschool.herokuapp.com/");
+        driver.findElement(By.cssSelector("a[href='/status_codes']")).click();
+        driver.findElement(By.cssSelector("a[href='status_codes/500']")).click();
+
+        String expected = "This page returned a 500 status code";
+        String actual = driver.findElement(By.xpath("//p[contains(text(), 'This page returned a 500')]")).getText();
+        Assert.assertTrue(actual.contains(expected));
+    }
+
 
         @BeforeMethod
     public void setup(){
